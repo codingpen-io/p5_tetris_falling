@@ -1,11 +1,11 @@
 export default class Block {
-  constructor(type) {
+  constructor(p5, type) {
     if (type === "I") {
-      this.arrTiles = [["_", "*"], ["_", "*"], ["_", "*"], ["_", "*"]];
+      this.arrTiles = [[".", "*"], [".", "*"], [".", "*"], [".", "*"]];
     } else if (type === "J") {
-      this.arrTiles = [["*", "*"], ["*", "_"], ["*", "_"], ["*", "_"]];
+      this.arrTiles = [["*", "*"], ["*", "."], ["*", "."], [".", "."]];
     } else if (type === "L") {
-      this.arrTiles = [["*", "_"], ["*", "_"], ["*", "_"], ["*", "*"]];
+      this.arrTiles = [[".", "."], ["*", "."], ["*", "."], ["*", "*"]];
     } else if (type === "O") {
       this.arrTiles = [["*", "*"], ["*", "*"], [".", "."], [".", "."]];
     } else if (type === "S") {
@@ -15,12 +15,25 @@ export default class Block {
     } else if (type === "Z") {
       this.arrTiles = [[".", "*"], ["*", "*"], ["*", "."], [".", "."]];
     }
-    this.row = 0;
-    this.col = 3;
+    this.row = 1;
+    this.col = Math.round(p5.random(1, 9));
+    //this.col = 9;
   }
   draw(p5, cellWidth, cellHeight) {
-    //p5.stroke(255, 255, 255);
-    //p5.fill(0, 255, 0);
-    //p5.rect(this.col * cellWidth, this.row * cellHeight);
+    console.log("cell", cellWidth, cellHeight);
+    p5.stroke(255, 255, 255);
+    p5.fill(0, 255, 0);
+    for (let j = 0; j < this.arrTiles.length; j++) {
+      let line = this.arrTiles[j];
+      for (let i = 0; i < line.length; i++) {
+        if (line[i] === "*")
+          p5.rect(
+            (this.col + i) * cellWidth,
+            (this.row + j) * cellHeight,
+            cellWidth,
+            cellHeight
+          );
+      }
+    }
   }
 }
